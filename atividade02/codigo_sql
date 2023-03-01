@@ -1,0 +1,67 @@
+create table funcionario(
+	FUN_codigo INTEGER PRIMARY KEY,
+	FUN_nome varchar(40) NOT NULL,
+	FUN_idade INTEGER  NOT NULL,
+	FUN_nascimento DATE NOT NULL
+);
+
+insert into funcionario (FUN_codigo, FUN_nome, FUN_idade, FUN_nascimento) values (1, 'Angelica Felix', 25, '1998-09-15')
+insert into funcionario (FUN_codigo, FUN_nome, FUN_idade, FUN_nascimento) values (2, 'Logan Conan', 34, '1989-12-05')
+insert into funcionario (FUN_codigo, FUN_nome, FUN_idade, FUN_nascimento) values (3, 'Ruan Souza', 28, '1995-03-24')
+insert into funcionario (FUN_codigo, FUN_nome, FUN_idade, FUN_nascimento) values (4, 'Leonardo Campelo', 31, '1992-07-16')
+select * from funcionario
+
+------------------------------------------------------------------------------------------
+
+create table fornecedor(
+	FOR_codigo INTEGER PRIMARY KEY, 
+	FOR_nome varchar(50) NOT NULL,
+	FOR_cidade varchar(40) NOT NULL,
+	FOR_bairro varchar(40) NOT NULL
+);
+insert into fornecedor (FOR_codigo, FOR_nome, FOR_cidade, FOR_bairro) values (1, 'Frios Gelidos', 'Baraunas', 'Santo Antonio')
+insert into fornecedor (FOR_codigo, FOR_nome, FOR_cidade, FOR_bairro) values (2, 'Peixaria Jose', 'Santos', 'Paredoes')
+insert into fornecedor (FOR_codigo, FOR_nome, FOR_cidade, FOR_bairro) values (3, 'Massas e Complementos', 'Pernambuco', 'Quintas dos Lagos')
+insert into fornecedor (FOR_codigo, FOR_nome, FOR_cidade, FOR_bairro) values (4, 'Refris', 'Goiania', 'Madureira')
+select * from fornecedor
+
+------------------------------------------------------------------------------------------
+
+create table produto(
+	PRO_codigo INTEGER PRIMARY KEY,
+	PRO_nome varchar(40) NOT NULL,
+	PRO_validade DATE NOT NULL,
+	PRO_preco numeric(5,2) NOT NULL,
+	PRO_fornecedor INTEGER,
+	FOREIGN KEY (PRO_fornecedor) REFERENCES fornecedor (FOR_codigo)
+);
+select * from produto
+insert into produto (PRO_codigo, PRO_nome, PRO_validade, PRO_preco, PRO_fornecedor) values (1, 'Leite', '2023-05-15', 7.55, 1)
+insert into produto (PRO_codigo, PRO_nome, PRO_validade, PRO_preco, PRO_fornecedor) values (2, 'Pao', '2023-09-20', 0.50, 3)
+insert into produto (PRO_codigo, PRO_nome, PRO_validade, PRO_preco, PRO_fornecedor) values (3, 'Refrigerante-Cola', '2025-07-03', 8.35, 4)
+insert into produto (PRO_codigo, PRO_nome, PRO_validade, PRO_preco, PRO_fornecedor) values (4, 'Camarao', '2023-12-02', 10.45, 2)
+
+------------------------------------------------------------------------------------------
+
+create table pedido(
+	PED_codigo INTEGER PRIMARY KEY,
+	PED_produto INTEGER NOT NULL,
+	PED_quantidade INTEGER NOT NULL,
+	PED_preco numeric(7,2) NOT NULL,
+	PED_data DATE NOT NULL,
+	PED_funcionario INTEGER NOT NULL,  
+	FOREIGN KEY (PED_funcionario) REFERENCES funcionario (FUN_codigo),
+	FOREIGN KEY (PED_produto) REFERENCES produto (PRO_codigo)
+);
+
+select * from pedido
+insert into pedido (PED_codigo, PED_produto, PED_quantidade, PED_preco, PED_data, PED_funcionario) values 
+					(1, 1, 2, 15.10, '2023-03-01', 1)
+insert into pedido (PED_codigo, PED_produto, PED_quantidade, PED_preco, PED_data, PED_funcionario) values 
+					(2, 2, 10, 5.00, '2023-03-01', 2)
+insert into pedido (PED_codigo, PED_produto, PED_quantidade, PED_preco, PED_data, PED_funcionario) values 
+					(3, 3, 3, 25.05, '2023-03-01', 3)
+insert into pedido (PED_codigo, PED_produto, PED_quantidade, PED_preco, PED_data, PED_funcionario) values 
+					(4, 4, 1, 10.45, '2023-03-01', 4)
+
+
